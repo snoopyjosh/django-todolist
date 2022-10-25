@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Profile</h1>
+{% if user.is_authenticated %}
+<ul>
+    <li> {{user.email}}</li>
+    <li> {{user.date_joined}}</li>
+</ul>
+{% endif %}
+{% endblock %}
