@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>首頁</title>
+{% endblock %}
+
+{% block style %}
+<style>
+    form {
+        display: inline-block;
+        margin: 6px 0px;
+    }
+
+    li {
+        display: inline-block;
+        width: 300px;
+        background-color: rgb(235, 241, 253);
+        margin: 6px 6px;
+        border: 2px solid darkblue;
+        padding: 6px;
+        border-radius: 6px;
+    }
+
+    button {
+        margin-top: 6px;
+        background-color: aqua;
+        border: none;
+        padding: 4px 8px;
+
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>TodoList</h1>
+
+{% if not request.user.is_authenticated %}
+<h3>請先註冊或登入</h3>
+{% else %}
+
+<!-- todo=>None -->
+{% if not todos %}
+<h3>目前無代辦事項，請先新增...</h3>
+{% else %}
+{% for todo in todos %}
+<li>
+    {% if todo.important %}
+    <span style="color:red">(重要)</span>
+    {% endif %}
+    <small>{{todo.created}}</small><br>
+    ---><a href="{% url 'viewtodo' todo.id %}">
+        {% if todo.completed %}
+        <s>{{todo.title}}</s>
+        {% else %}
+        {{todo.title}}
+        {% endif %}
+    </a><br>
+    <form action="{% url 'delete' todo.id %}">
+        <button type="submit">刪除</button>
+    </form>
+    <form action="{% url 'completed_by_id' todo.id %}">
+        <button type="submit">完成</button>
+    </form>
+</li>
+{% endfor %}
+{% endif %}
+
+{% endif %}
+{% endblock %}
+
+{% block javascript %}
+<!-- <script>
+    console.log("test!");
+    function sort() {
+        console.log("sort!");
+        $.ajax({
+            type: "GET",
+            url: '{{ 'create/' }}',
+            success: function (data) {
+                alert(data);
+            }
+        }
+        );
+    }
+</script> -->
+
+{% endblock %}
