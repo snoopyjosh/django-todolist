@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>代辦檢視</title>
+{% endblock %}
+{% block style %}
+<style>
+    .title {
+        background-color: darkblue;
+        padding: 12px;
+        border-radius: 6px;
+        /* display: inline-block; */
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>ViewTodo</h1>
+<small>建立日期:{{todo.created}}</small><br>
+<h2 class="title">標題:{{todo.title}}</h2>
+<ul>
+    <li>重要:{% if todo.important %}
+        是{% else %}否{% endif %}
+    </li>
+    <li>項目:{{todo.text}}</li>
+    <li>完成時間:
+        {% if todo.date_completed %}
+        {{todo.date_completed}}
+        {% endif %}
+    </li>
+</ul>
+<hr>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" name="update" value="更新">
+    <input type="submit" name="delete" value="刪除">
+
+</form>
+{% endblock %}
